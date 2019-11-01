@@ -3,7 +3,7 @@ attributes = "Shelah;22;22.5;-21.5";
 theSeparator = ';';
 parts = attributes.split(theSeparator);
 
-// parts =['Shelah', 22, 22.5, -21.5];
+//parts =['Shelah', 22, 22.5, -21.5];
 
 //for (i = 0; i < parts.length; i++) {
   parts.forEach(fucntion (item,index) {
