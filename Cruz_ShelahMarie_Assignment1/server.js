@@ -1,4 +1,4 @@
-// Shelah Marie Cruz, got few codes from Lab13 and Assignment1 Example
+// Shelah Marie Cruz
 const querystring = require('querystring'); //require that the server responds to any errors in the invoice (line 33)
 
 var express = require('express'); //code for server (got this from Lab13)
