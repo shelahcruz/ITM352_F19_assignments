@@ -1,11 +1,11 @@
-// Shelah Marie Cruz
-const querystring = require('querystring'); //require that the server responds to any errors in the invoice (line 33)
+// Shelah Marie Cruz got few codes from Lab13 and example Assignment1
+const querystring = require('querystring'); // require that the server responds to any errors in the invoice
 
-var express = require('express'); //code for server (got this from Lab13)
-var myParser = require("body-parser"); //code for server (got this from Lab13)
+var express = require('express'); //code for server 
+var myParser = require("body-parser"); //code for server
 var products = require("./public/product_data.js"); //accessing data from javascript file
-var app = express(); //got this from Lab13
 
+var app = express();
 app.all('*', function (request, response, next) {
    console.log(request.method + ' to ' + request.path);
    next();
@@ -13,21 +13,21 @@ app.all('*', function (request, response, next) {
 
 app.use(myParser.urlencoded({ extended: true }));
 
-//this goes to invoice if quantity values are good and if not, it redirect back to order page (got it from Lab13)
+//go to invoice if quantity values are good, if not, redirect back to order page 
 app.get("/process_page", function (request, response) {
-   
-    // it checks for valid quantities
+   //check for valid quantities
+   //look up request.query
    params = request.query;
    console.log(params);
    if (typeof params['purchase_submit'] != 'undefined') {
       has_errors = false; // assume that quantity values are valid
-      total_qty = 0; // checks if there are values, must check if total > 0
+      total_qty = 0; // check if there are values in the first place, so see if total > 0
       for (i = 0; i < products.length; i++) {
          if (typeof params[`quantity${i}`] != 'undefined') {
             a_qty = params[`quantity${i}`];
             total_qty += a_qty;
             if (!isNonNegInt(a_qty)) {
-               has_errors = true; // this sees if there is invalid data
+               has_errors = true; // see if there is invalid data
             }
          }
       }
@@ -42,8 +42,8 @@ app.get("/process_page", function (request, response) {
       }
    }
 });
-//I got the code from Lab13
 //if quantity data valid, send them to the invoice
+
 function isNonNegInt(q, returnErrors = false) {
    errors = []; // assume that quantity data is valid 
    if (q == "") { q = 0; }
