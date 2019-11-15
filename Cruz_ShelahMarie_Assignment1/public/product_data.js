@@ -1,3 +1,4 @@
+/*Shelah Marie Cruz, product array listing brand, price, and image*/
 var products =
 
 [
