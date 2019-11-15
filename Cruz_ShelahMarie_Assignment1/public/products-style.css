@@ -1,0 +1,59 @@
+/* General */  
+html {
+    background-color: rgb(113, 197, 197);
+    font-size: 18px;
+    
+  }
+body {width: 900px; margin: 10px auto;}
+
+/* Typography */  
+h1, h2 {text-align: center;}
+  
+
+/* Form styling */  
+main {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;      
+}
+
+/* Styling the products display */ 
+img {height: 200px; width: 220px;}
+div {
+      padding-top: 10px;
+      padding-right:0px;
+      padding-bottom: 10px;
+      padding-left: 0px;
+  }
+
+/* styling the invoice table */
+table {
+  /* size and color of the invoice table*/
+  background-color: rgb(243, 243, 243);
+  text-align: center;
+  margin: auto;
+  height: 500px;
+  width: 900px;
+  /* space surrounding invoice table */
+  padding-top: 30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+  /* (black) border */
+  border-top-style: outset;
+  border-right-style: outset;
+  border-bottom-style: outset;
+  border-left-style: outset;
+  border-top-color: rgb(113, 197, 197);
+  border-right-color: rgb(113, 197, 197);
+  border-bottom-color: rgb(113, 197, 197);
+  border-left-color: rgb(113, 197, 197);
+  }
+
+/* purchase button */
+input[type=submit] {
+  width: 8em;  height: 3em;
+  font-size: 22px;
+  color: black;
+  float: none;
+  }
