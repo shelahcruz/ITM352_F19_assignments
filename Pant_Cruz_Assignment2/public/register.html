@@ -1,3 +1,4 @@
+<script>/*PREETHA PANT and SHELAH MARIE CRUZ, 12/3/2019*/</script>
 <!DOCTYPE html>
 <html>
 
@@ -6,7 +7,7 @@
     let params = (new URL(document.location)).searchParams;
 
     window.onload = function (){
-        // make things sticky 
+        // make username sticky 
         if(params.has('submit')) {
           username.value = params.get('username');
 
@@ -14,10 +15,31 @@
         // display errors
         if(params.has('username_error')) {
           username_error_span.innerHTML = params.get('username_error');
+        }   
+    }
+
+    window.onload = function (){
+        // make full name sticky 
+        if(params.has('submit')) {
+          username.value = params.get('name');
+
         }
+        // display errors
+        if(params.has('name_error')) {
+          username_error_span.innerHTML = params.get('name_error');
+        }   
+    }
 
+    window.onload = function (){
+        // make email sticky 
+        if(params.has('submit')) {
+          username.value = params.get('email');
 
-        
+        }
+        // display errors
+        if(params.has('email_error')) {
+          username_error_span.innerHTML = params.get('email_error');
+        }   
     }
     </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -87,26 +109,37 @@
   <div class="container">
     <form id="registration_page" method="POST" action="registration" name="register">
       <label for="username">Username</label>
-      <input type="text" id="username" name="username" minlength="5" maxlength="20" placeholder="Enter Username"
-        onkeyup="" required>
-        <span id="username_error_span"></span>
-        <label for="name">Name</label>
-     <input type="text" id="name" name="name" minlength="8" placeholder="Enter Name">
+      <input type="text" id="username" name="username" onkeyup="" required
+      patter=".[a-z0-9]{4,10}" 
+      title="4-10 Characters, only numbers and lowercaseletters" placeholder="Enter Username"><br/>
+     <span id="username_error_span"></span>
+      
+
+      <label for="fullname">Name</label>
+      <input type="text" id="fullname" name="fullname" onkeyup="" required
+        pattern="[a-zA-Z]+[ ]+[a-zA-Z]+" maxlength="30" 
+        placeholder="Enter First & Last Name" 
+        title="Only letters, & add one space between first name and last name"><br/>
+        <span id="fullname_error_span"></span> 
     
        
-
       <label for="password">Password</label>
-      <input type="password" id="password" name="password" minlength="8" placeholder="Enter Password"
-        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
-        title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters"
-        onkeyup="" required>
+      <input type="password" id="password" name="password" placeholder="Enter Password" onkeyup="" required
+        pattern=".[a-z0-9]{6,}" minlength="6"
+        title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters"><br/>
+        <span id="password_error_span"></span> 
+        
 
-      <label for="password_confirm">Password</label>
-      <input type="password" id="password_confirm" name="password_confirm" placeholder="Re-enter Password" onkeyup=""
-        required>
+      <label for="password_confirm">Confirm Password</label>
+      <input type="password" id="password_confirm" name="password_confirm" placeholder="Re-enter Password" onkeyup="" required
+        pattern=".[a-z0-9]{6,}"
+        title="Must match password above" placeholder="Re-enter Password"><br/> 
 
-      <label for="email">Email</label>
-      <input type="email" name="email" size="40" placeholder="Enter Email" onkeyup=""><br />
+      <label for="email">Email Address</label>
+      <input type="email" name="email" size="40" placeholder="Enter Email" onkeyup="" required
+        pattern="[a-z0-9._]+@[a-z0-9]+\.[a-z]{2,3}$"
+        title="Error!! Make sure your email contains the following... 1. @ sign 2. Three letters in domain name 3. Only numbers/characters and _ & . may be used. "><br/>
+      
 
       <input type="submit" name="submit" value="Register">
     </form>
