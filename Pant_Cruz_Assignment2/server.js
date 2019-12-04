@@ -52,7 +52,7 @@ app.get("/process_form", function (request, response) {
     has_errors = false; // assume quantities are valid from the start
     total_qty = 0; // need to check if something was selected so we will look if the total > 0
     for (i = 0; i < products.length; i++) {//checking each of the products in the array
-      if (typeof params[`quantity${i}`] != 'undefined') {
+      if (typeof params[`quantity${i}`] != 'undefined') { //if it's not undefined then it move on to the next if statement
         a_qty = params[`quantity${i}`];
         console.log(a_qty);
         total_qty += a_qty;//total quantity is addition of each individual quantity
@@ -118,56 +118,57 @@ app.post("/login.html", function (request, response) {
 });
 
 app.post("/registration", function (request, response) {
-  let INFO = request.body;
-  console.log(INFO);
+  console.log(user_product_quantities);
+  the_username = request.body.username;
   //Makes the username case-insensitive
-  username = INFO.username.toLowerCase();
+  username = request.body.username.toLowerCase();
   //Resest Errors in string so them dont carry over if user messes up multiple 
   //process a simple register form
-
+  
+  var pass = request.body.password; //create variable of data in password form field
+  var confirm_pass = request.body.confirm_password; //create variable of data in confirmPassword form field
+  
   has_errors = false;
 
   //validate registration data (add validation code for Assignment2)
 errors={};//holds error messages
+
   //Username: (a) This should have a minimum of 4 characters and maximum of 10 characters. (b) Only letters and numbers are valid. (c) Usernames are CASE INSENSITIVE. (d) They must be unique. There may only be one of any particular username. Because of this, you will have to find a way to check the new username against the usernames saved in your file.
-  var letterNumber = /^[0-9a-zA-Z]{4,10}$/;
-  if (letterNumber.test(username) == false) {
-    has_errors = true;
-    errors["username_error"]="username must be between 4 and 10 characters only letters and numbers";
-  }
+  if (typeof users_reg_data[username] != 'undefined'){
+    errors.username_error="Username is Already in Use"; //if username is in json file, say username is already in use
+    }
+    if ((/[a-z0-9]+/).test(request.body.username) ==false){ //only allows numbers and letters for the username
+       errors.username_error="Only numbers/letters";
+    }
+    if ((username.length > 10) ==true){
+       errors.username_error = "Please make your username shorter"; //if length is more than 10, show error to make the username shorter
+    }
+    if ((username.length < 4) ==true){
+       errors.username_error = "Please make your username longer"; //if length is less than 4, show error to make the username longer
+    }
 
-  //check if username is exists
-  if(typeof users_reg_data[username]!= "undefined") {
-    has_errors=true;
-    errors["username_error"]="username is taken";
-  }
-
-  //Password: (a) This should have a minimum of 6 characters. (b) Any characters are valid. (c) Passwords are CASE SENSITIVE. That is, “ABC” is different from “abc”.
-  var letterNumber = /{6,}/;
-  if (letterNumber.test(password) == false) {
+  /*Password: (a) This should have a minimum of 6 characters. (b) Any characters are valid. (c) Passwords are CASE SENSITIVE. That is, “ABC” is different from “abc”.
+  var letters = /{6,}$/;
+  if (letters.test(password) == false) {
     has_errors = true;
     errors["password_error"]="password should have a minimum of 6";
   }
+*/ 
 
   //Email address: (a) The format should be X@Y.Z where (b) X is the user address which can only contain letters, numbers, and the characters “_” and “.” (c) Y is the host machine which can contain only letters and numbers and “.” characters (d) Z is the domain name which is either 2 or 3 letters such as “edu” or “tv”. (e) Email addresses are CASE INSENSITIVE.
-  var letterNumber = /[a-z0-9._]+@[a-z0-9]+\.[a-z]{2,3}$/;
-  if (letterNumber.test(email) == false) {
-    has_errors = true;
-    errors["email_error"]="username must have @ sign. Three letters in domain name. Only letter and numbers";
-  }
-
-  //check if email is exists
-  if(typeof users_reg_data[username]!= "undefined") {
-    has_errors=true;
-    errors["email_error"]="email is taken";
-  }
-
+  if ((/[a-z0-9._]+@[a-z0-9]+\.[a-z]+/).test(request.body.email) == false) {
+    errors.email_error="Please enter proper email";
+    }
+  
   //Full Name The users full name. Should only allow letters. No more than 30 characters.
-  var letters = /[a-zA-Z]+[ ]+[a-zA-Z]+/;
-  if (letters.test(fullname) == false) {
-    has_errors = true;
-    errors["name_error"]="name must be no more than 30 characters only letters and add a space";
-  }
+  fullname = request.body.fullname;//retrieves the fullname data
+if ((/[a-zA-Z]+[ ]+[a-zA-Z]+/).test(request.body.fullname) == false){
+errors.fullname_error="Only use letters and a space";
+}
+
+if ((fullname.length > 30) ==true){
+   errors.fullname_error = "Please make your full name shorter. 30 characters max"; //if length is greater than 30, send error that 30 characters are max
+}
   
 
   /* 
@@ -279,7 +280,7 @@ function passwordVerify() {
     //creates new user
 
     users_reg_data[username] = {};//key with new username, empty object
-    //users_reg_data[username].username = request.body.username; not sure if we need to add this 
+    users_reg_data[username].username = request.body.username; 
     users_reg_data[username].password = request.body.password;//add password
     users_reg_data[username].name = request.body.name;//add name
     users_reg_data[username].email = request.body.email;//add email
