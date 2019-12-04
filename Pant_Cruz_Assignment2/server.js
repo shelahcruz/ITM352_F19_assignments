@@ -1,4 +1,4 @@
-//PREETHA PANT, 11/26/19, creating own server to serve up our website
+//PREETHA PANT and SHELAH MARIE CRUZ 12/3/19, creating own server to serve up our website
 const querystring = require('querystring');//require that the server responds to any errors
 var fs = require('fs');//getting the component fs and loading it in and saving it in the module fs, because when you do a require it creates a module 
 var express = require('express');// start express package to set up server
@@ -134,25 +134,42 @@ errors={};//holds error messages
   if (letterNumber.test(username) == false) {
     has_errors = true;
     errors["username_error"]="username must be between 4 and 10 characters only letters and numbers";
-
   }
+
   //check if username is exists
   if(typeof users_reg_data[username]!= "undefined") {
     has_errors=true;
     errors["username_error"]="username is taken";
   }
 
-
-
-
-
-
   //Password: (a) This should have a minimum of 6 characters. (b) Any characters are valid. (c) Passwords are CASE SENSITIVE. That is, “ABC” is different from “abc”.
+  var letterNumber = /{6,}/;
+  if (letterNumber.test(password) == false) {
+    has_errors = true;
+    errors["password_error"]="password should have a minimum of 6";
+  }
 
   //Email address: (a) The format should be X@Y.Z where (b) X is the user address which can only contain letters, numbers, and the characters “_” and “.” (c) Y is the host machine which can contain only letters and numbers and “.” characters (d) Z is the domain name which is either 2 or 3 letters such as “edu” or “tv”. (e) Email addresses are CASE INSENSITIVE.
+  var letterNumber = /[a-z0-9._]+@[a-z0-9]+\.[a-z]{2,3}$/;
+  if (letterNumber.test(email) == false) {
+    has_errors = true;
+    errors["email_error"]="username must have @ sign. Three letters in domain name. Only letter and numbers";
+  }
 
+  //check if email is exists
+  if(typeof users_reg_data[username]!= "undefined") {
+    has_errors=true;
+    errors["email_error"]="email is taken";
+  }
 
   //Full Name The users full name. Should only allow letters. No more than 30 characters.
+  var letters = /[a-zA-Z]+[ ]+[a-zA-Z]+/;
+  if (letters.test(fullname) == false) {
+    has_errors = true;
+    errors["name_error"]="name must be no more than 30 characters only letters and add a space";
+  }
+  
+
   /* 
    // SELECTING ALL TEXT ELEMENTS
 var username = document.forms['vform']['username'];
@@ -262,6 +279,7 @@ function passwordVerify() {
     //creates new user
 
     users_reg_data[username] = {};//key with new username, empty object
+    //users_reg_data[username].username = request.body.username; not sure if we need to add this 
     users_reg_data[username].password = request.body.password;//add password
     users_reg_data[username].name = request.body.name;//add name
     users_reg_data[username].email = request.body.email;//add email
